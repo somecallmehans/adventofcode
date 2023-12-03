@@ -12,6 +12,17 @@ def remove_game(game_string):
     pattern = r'^Game \d+: '
     return re.sub(pattern, '', game_string)
 
+def process_game_vals(games):
+    updated_game_list = []
+    nt = games.split(", ")
+    for n in nt:
+        split = n.split(' ')
+        key = split[1]
+        val = split[0]
+        updated_game_list.append({key: val})
+
+    return updated_game_list
+
 processed_string = [remove_game(game) for game in content]
 
 #################################
@@ -21,13 +32,7 @@ def do_the_thing(one_game):
     # Each instance of this is 1 game
     processed_thing = one_game.split("; ")
     for pt in processed_thing:
-        new_list = []
-        nt = pt.split(", ")
-        for n in nt:
-            split = n.split(' ')
-            key = split[1]
-            val = split[0]
-            new_list.append({key: val})
+        new_list = process_game_vals(pt)
         for g in new_list:
             for key, val in thresholds.items():
                 if(key in g and int(g[key]) > val):
@@ -51,13 +56,7 @@ def do_the_thing_again(one_game):
     smallest_vals = {}
     processed_thing = one_game.split("; ")
     for pt in processed_thing:
-        new_list = []
-        nt = pt.split(", ")
-        for n in nt:
-            split = n.split(' ')
-            key = split[1]
-            val = split[0]
-            new_list.append({key: val})
+        new_list = process_game_vals(pt)
         for g in new_list:
             for key, current_val in g.items():
                 if(key in smallest_vals):
