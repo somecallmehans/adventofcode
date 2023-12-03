@@ -29,9 +29,7 @@ processed_string = [remove_game(game) for game in content]
 # pt 1 answer
 #################################
 def do_the_thing(one_game):
-    # Each instance of this is 1 game
-    processed_thing = one_game.split("; ")
-    for pt in processed_thing:
+    for pt in one_game:
         new_list = process_game_vals(pt)
         for g in new_list:
             for key, val in thresholds.items():
@@ -44,7 +42,7 @@ def do_the_thing(one_game):
 
 valid_games = 0
 for idx, one_game in enumerate(processed_string):
-    check = do_the_thing(one_game)
+    check = do_the_thing(one_game.split("; "))
     if(check):
         valid_games += (idx + 1)
 print("SUM: ", valid_games)
@@ -54,8 +52,7 @@ print("SUM: ", valid_games)
 #################################
 def do_the_thing_again(one_game):
     smallest_vals = {}
-    processed_thing = one_game.split("; ")
-    for pt in processed_thing:
+    for pt in one_game:
         new_list = process_game_vals(pt)
         for g in new_list:
             for key, current_val in g.items():
@@ -72,6 +69,6 @@ def do_the_thing_again(one_game):
 
 total = 0
 for one_game in processed_string:
-    summed = do_the_thing_again(one_game)
+    summed = do_the_thing_again(one_game.split("; "))
     total += summed
 print("TOTAL: ", total)
